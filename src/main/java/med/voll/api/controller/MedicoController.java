@@ -44,6 +44,7 @@ public class MedicoController {
         medico.atualizarInformações(dados);
     }
 
+    //É preciso mapear o id na url
     @DeleteMapping("deletar/{id}")
     @Transactional
     //Este médico deleta sem excluir os dados do DB, apenas os desativa
