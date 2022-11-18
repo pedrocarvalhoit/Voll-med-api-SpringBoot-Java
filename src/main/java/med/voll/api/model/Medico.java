@@ -1,12 +1,13 @@
 package med.voll.api.model;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.dto.DadosAtualizacaoMedico;
 import med.voll.api.dto.DadosCadastroMedico;
+
+import javax.persistence.*;
 
 @Table(name = "medicos")
 @Entity(name="Medico")
@@ -66,5 +67,9 @@ public class Medico {
 
     public void inativar() {
         this.status = false;
+    }
+
+    public void reativar() {
+        this.status = true;
     }
 }

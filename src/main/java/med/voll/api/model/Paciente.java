@@ -1,12 +1,13 @@
 package med.voll.api.model;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.dto.DadosAtualizacaoPaciente;
 import med.voll.api.dto.DadosCadastroPaciente;
+
+import javax.persistence.*;
 
 @Entity(name = "Paciente")
 @Table(name = "pacientes")
@@ -55,4 +56,8 @@ public class Paciente {
         }
 
         }
+
+    public void reativar() {
+        this.status = true;
+    }
 }
