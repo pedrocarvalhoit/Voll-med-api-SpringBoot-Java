@@ -1,6 +1,10 @@
 package med.voll.api.config.security;
 
+import med.voll.api.model.Usuario;
+import med.voll.api.repository.UserRepository;
 import org.hibernate.annotations.Filter;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -13,8 +17,12 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 
     //Este tipo de classe não aceita Autowired
     private TokenService tokenService;
-    public AutenticacaoViaTokenFilter(TokenService tokenService){
+    private UserRepository userRepository;
+
+
+    public AutenticacaoViaTokenFilter(TokenService tokenService, UserRepository userRepository){
         this.tokenService = tokenService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -22,9 +30,19 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 
         String token = recuperarToken(request);
         boolean valido = tokenService.isTokenValido(token);
+        if(valido){
+            autenticarCliente(token);
+        }
 
         filterChain.doFilter(request, response);
 
+    }
+
+    private void autenticarCliente(String token) {
+        Long idUsuario = tokenService.getIdUsuario(token);
+        Usuario usuario = userRepository.findById(idUsuario).get();
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     private String recuperarToken(HttpServletRequest request) {

@@ -1,5 +1,7 @@
 package med.voll.api.config.security;
 
+import med.voll.api.model.Usuario;
+import med.voll.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     @Bean
     protected AuthenticationManager authenticationManager() throws Exception {
@@ -50,17 +55,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/medicos/*").permitAll()
                 .antMatchers(HttpMethod.GET, "/pacientes/*").permitAll()
                 .antMatchers(HttpMethod.GET, "/auth/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService), UsernamePasswordAuthenticationFilter.class);//Configurando autenticação por token
+                .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, userRepository ), UsernamePasswordAuthenticationFilter.class) //Configurando autenticação por token
+        ;
 
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-
+        web.ignoring()
+                .antMatchers("/**.html",
+                        "/v3/api-docs/**",
+                        "/webjars/**",
+                        "/configuration/**",
+                        "/swagger-resources/**",
+                        "/swagger-ui/**");
     }
 
     @Bean
