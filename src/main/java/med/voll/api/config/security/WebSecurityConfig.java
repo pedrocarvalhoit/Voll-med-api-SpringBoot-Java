@@ -25,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@Profile("prod")//Ambiente de produção
+@Profile(value = {"prod", "test"})//Ambiente de produção
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

@@ -16,4 +16,6 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
     public Long findById(DadosAtualizacaoMedico dados);
 
     Page<Medico> findAllByStatusTrue(Pageable page);
+
+    public Medico findById();
 }
