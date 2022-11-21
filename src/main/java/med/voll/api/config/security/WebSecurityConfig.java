@@ -5,6 +5,7 @@ import med.voll.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityBuilder;
@@ -24,14 +25,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@Profile("prod")//Ambiente de produção
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AutenticacaoService autenticacaoService;
-
     @Autowired
     private TokenService tokenService;
-
     @Autowired
     private UserRepository userRepository;
 
@@ -54,9 +54,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/medicos/*").permitAll()
                 .antMatchers(HttpMethod.GET, "/pacientes/*").permitAll()
-                .antMatchers(HttpMethod.GET, "/auth/*").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth/*").permitAll()
                 .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/medicos/*").hasRole("MODERADOR")
+                .antMatchers(HttpMethod.PUT, "/medicos/*").hasRole("MODERADOR")
+                .antMatchers(HttpMethod.DELETE, "/medicos/*").hasRole("MODERADOR")
+                .antMatchers(HttpMethod.POST, "/pacientes/*").hasRole("MODERADOR")
+                .antMatchers(HttpMethod.PUT, "/pacientes/*").hasRole("MODERADOR")
+                .antMatchers(HttpMethod.DELETE, "/pacientes/*").hasRole("MODERADOR")
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
