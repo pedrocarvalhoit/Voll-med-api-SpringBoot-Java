@@ -1,10 +1,10 @@
 package med.voll.api.controller;
 
+import med.voll.api.repository.PacienteRepository;
 import med.voll.api.dto.DadosAtualizacaoPaciente;
 import med.voll.api.dto.DadosCadastroPaciente;
 import med.voll.api.dto.DadosListagemPaciente;
 import med.voll.api.model.Paciente;
-import med.voll.api.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;

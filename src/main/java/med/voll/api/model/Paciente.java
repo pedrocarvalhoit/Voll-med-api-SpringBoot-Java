@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import med.voll.api.model.Endereco;
 import med.voll.api.dto.DadosAtualizacaoPaciente;
 import med.voll.api.dto.DadosCadastroPaciente;
 

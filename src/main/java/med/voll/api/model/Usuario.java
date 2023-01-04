@@ -1,6 +1,6 @@
 package med.voll.api.model;
 
-import org.hibernate.annotations.Fetch;
+import med.voll.api.model.Perfil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -2,7 +2,6 @@ package med.voll.api.config.security;
 
 import med.voll.api.model.Usuario;
 import med.voll.api.repository.UserRepository;
-import org.hibernate.annotations.Filter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;

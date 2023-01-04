@@ -3,16 +3,10 @@ package med.voll.api.controller;
 import io.jsonwebtoken.lang.Assert;
 import med.voll.api.builder.PacienteBuilder;
 import med.voll.api.model.Paciente;
-import med.voll.api.model.Usuario;
 import med.voll.api.repository.PacienteRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import javax.persistence.EntityManager;
 
 
 class PacienteControllerTest {
