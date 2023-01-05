@@ -14,7 +14,6 @@ public class DevWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     //Configurações de autorização
-    //Libera apenas as requisições GET
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
