@@ -15,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 
@@ -28,13 +29,17 @@ public class MedicoController {
 
     //Requisição Post que chegar na classe irá para este método
     //Ativa transação com DB
+    //Este método precisa retornar os dados do médico criado, e a url de acesso ao método
     @PostMapping("cadastrar")
     @Transactional
     @CacheEvict(value = "listaDeMedicos", allEntries = true)
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dados){
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dados, UriComponentsBuilder uriBuilder){
         //O parametro json será preenchido com o corpo da requisição
-        medicoRepository.save(new Medico(dados));
-        return ResponseEntity.noContent().build();
+        var medico = new Medico(dados);
+        medicoRepository.save(medico);
+        //Cria uri para ser devolvida
+        var uri = uriBuilder.path("/medicos/detalharDados/{id}").buildAndExpand(medico.getId()).toUri();
+        return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
     }
 
     //PeagebleDefualt altera os dados originais de paginação
@@ -68,13 +73,20 @@ public class MedicoController {
         return ResponseEntity.noContent().build();
     }
 
-    //Este médico reativa o médico
+    //Este método reativa o médico
     @PutMapping("reativar/{id}")
     @Transactional
     public ResponseEntity reativar(@PathVariable Long id){
         var medico = medicoRepository.getReferenceById(id);
         medico.reativar();
         return ResponseEntity.noContent().build();//204
+    }
+
+    @GetMapping("detalharDados/{id}")
+    public ResponseEntity detalharDados(@PathVariable Long id){
+        var medico = medicoRepository.findById(id).map(DadosDetalhamentoMedico::new);
+        return ResponseEntity.ok(medico);
+
     }
 
 }
