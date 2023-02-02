@@ -1,9 +1,9 @@
 package med.voll.api.controller;
 
 import io.jsonwebtoken.lang.Assert;
-import med.voll.api.builder.PacienteBuilder;
-import med.voll.api.model.Paciente;
-import med.voll.api.repository.PacienteRepository;
+import med.voll.api.domain.paciente.PacienteBuilder;
+import med.voll.api.domain.paciente.Paciente;
+import med.voll.api.domain.paciente.PacienteRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
