@@ -1,6 +1,4 @@
-package med.voll.api.builder;
-
-import med.voll.api.model.Paciente;
+package med.voll.api.domain.paciente;
 
 public class PacienteBuilder {
 

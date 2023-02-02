@@ -1,6 +1,6 @@
-package med.voll.api.model;
+package med.voll.api.domain.usuario;
 
-import med.voll.api.model.Perfil;
+import med.voll.api.domain.perfil.Perfil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -1,11 +1,11 @@
 package med.voll.api.controller;
 
-import med.voll.api.dto.DadosDetalhamentoMedico;
-import med.voll.api.repository.MedicoRepository;
-import med.voll.api.dto.DadosAtualizacaoMedico;
-import med.voll.api.dto.DadosCadastroMedico;
-import med.voll.api.dto.DadosListagemMedicos;
-import med.voll.api.model.Medico;
+import med.voll.api.domain.medico.DadosDetalhamentoMedico;
+import med.voll.api.domain.medico.MedicoRepository;
+import med.voll.api.domain.medico.DadosAtualizacaoMedico;
+import med.voll.api.domain.medico.DadosCadastroMedico;
+import med.voll.api.domain.medico.DadosListagemMedicos;
+import med.voll.api.domain.medico.Medico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -84,8 +84,8 @@ public class MedicoController {
 
     @GetMapping("detalharDados/{id}")
     public ResponseEntity detalharDados(@PathVariable Long id){
-        var medico = medicoRepository.findById(id).map(DadosDetalhamentoMedico::new);
-        return ResponseEntity.ok(medico);
+        var medico = medicoRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
 
     }
 

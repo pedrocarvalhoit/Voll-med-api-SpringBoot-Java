@@ -1,9 +1,8 @@
-package med.voll.api.model;
+package med.voll.api.domain.endereco;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.dto.DadosEndereco;
 
 import javax.persistence.Embeddable;
 

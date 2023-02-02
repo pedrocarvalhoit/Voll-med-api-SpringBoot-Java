@@ -1,12 +1,10 @@
-package med.voll.api.model;
+package med.voll.api.domain.paciente;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.model.Endereco;
-import med.voll.api.dto.DadosAtualizacaoPaciente;
-import med.voll.api.dto.DadosCadastroPaciente;
+import med.voll.api.domain.endereco.Endereco;
 
 import javax.persistence.*;
 
