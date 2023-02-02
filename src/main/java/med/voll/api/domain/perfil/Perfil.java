@@ -1,4 +1,4 @@
-package med.voll.api.model;
+package med.voll.api.domain.perfil;
 
 import org.springframework.security.core.GrantedAuthority;
 
