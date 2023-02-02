@@ -1,4 +1,4 @@
-package med.voll.api.dto;
+package med.voll.api.domain.endereco;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
