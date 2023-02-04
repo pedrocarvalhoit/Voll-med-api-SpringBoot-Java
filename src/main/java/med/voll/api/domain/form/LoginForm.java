@@ -1,4 +1,4 @@
-package med.voll.api.form;
+package med.voll.api.domain.form;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
