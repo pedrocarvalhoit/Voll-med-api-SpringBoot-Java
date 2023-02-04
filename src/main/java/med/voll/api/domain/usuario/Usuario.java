@@ -1,7 +1,11 @@
 package med.voll.api.domain.usuario;
 
-import med.voll.api.domain.perfil.Perfil;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -9,80 +13,35 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-//Impelments que determina a classe como usuário a ser autenticado
-@Entity
+@Table(name = "usuarios")
+@Entity(name = "Usuario")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
-    private String email;
+    private String login;
     private String senha;
-
-    @ManyToMany(
-            fetch = FetchType.EAGER
-    )
-    private List<Perfil> perfis = new ArrayList<>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Perfil> getPerfis() {
-        return perfis;
-    }
-
-    public void setPerfis(List<Perfil> perfis) {
-        this.perfis = perfis;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.perfis;
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
-    /**Senha e login são indicados abaixo */
     @Override
     public String getPassword() {
-        return this.senha;
+        return senha;
     }
 
     @Override
     public String getUsername() {
-        return this.email;
+        return login;
     }
 
-    /**Os métodos abaixo vem como defauld false
-     * mas é preciso alterar para true */
     @Override
     public boolean isAccountNonExpired() {
         return true;
