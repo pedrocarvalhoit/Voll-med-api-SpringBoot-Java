@@ -24,6 +24,7 @@ public class SecutiryConfigurations {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
+                //Política da sessão, desabilita tela de login
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
@@ -38,7 +39,9 @@ public class SecutiryConfigurations {
     }
 
     @Bean
+    //Configurando criptografia da senha do usuário
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 

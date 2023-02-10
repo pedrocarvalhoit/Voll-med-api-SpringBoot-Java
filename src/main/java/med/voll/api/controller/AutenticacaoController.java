@@ -29,14 +29,20 @@ public class AutenticacaoController {
     @Autowired
     private TokenService tokenService;
 
+    //Método que efetua o login, utilizando DTO do próprio Spring
+    /*Primeiro passo é criar o usuário e a autenticação através dos usuários registrados no banco
+    * Segundo passo é a criação do serviço de token, para que possa ser devolvido um toker quando o usuário se autentica */
     @PostMapping
-    public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados) {
+    public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados){
         var authenticationToken = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
         var authentication = manager.authenticate(authenticationToken);
 
         var tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
 
+        //Retorna o token, e para identificação, recebe o usuário no gerarToken
         return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
     }
+
+
 
 }

@@ -12,22 +12,23 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-
-
+//Documentação está em jwt.io
 @Service
 public class TokenService {
 
+    //Senha de autorização do HMAC, que está guardada no properties
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String gerarToken(Usuario usuario) {
+    //Método recebe o usuário para identificação no retorno
+    public String gerarToken(Usuario usuario){
         try {
-            var algoritmo = Algorithm.HMAC256(secret);
+            var algoritimo = Algorithm.HMAC256(secret);
             return JWT.create()
-                    .withIssuer("API Voll.med")
-                    .withSubject(usuario.getLogin())
-                    .withExpiresAt(dataExpiracao())
-                    .sign(algoritmo);
+                    .withIssuer("API Voll.med")//Programa responsável
+                    .withSubject(usuario.getLogin())//Usuário autenticado
+                    .withExpiresAt(dataExpiracao())//Expiração do token
+                    .sign(algoritimo);
         } catch (JWTCreationException exception){
             throw new RuntimeException("erro ao gerar token jwt", exception);
         }
@@ -35,7 +36,7 @@ public class TokenService {
 
     public String getSubject(String tokenJWT) {
         try {
-            var algoritmo = Algorithm.HMAC256(secret);
+            var algoritmo = Algorithm.HMAC256("12345678");
             return JWT.require(algoritmo)
                     .withIssuer("API Voll.med")
                     .build()
@@ -46,8 +47,8 @@ public class TokenService {
         }
     }
 
-    private Instant dataExpiracao() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+    private Instant dataExpiracao(){
+        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("+01:00"));
     }
 
 }
